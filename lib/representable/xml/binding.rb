@@ -106,7 +106,7 @@ module Representable
 
 
       class Hash < Collection
-        def read(node, as)
+        def read(node, _as)
           nodes = self[:wrap] ? node.xpath(self[:wrap]) : Nokogiri::XML::NodeSet.new(node.document, [node])
           return FragmentNotFound if nodes.empty?
 
