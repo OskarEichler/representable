@@ -2,6 +2,7 @@ gem 'nokogiri', '> 1.10.8'
 require 'nokogiri'
 
 require 'representable'
+require 'representable/xml/binding'
 
 module Representable
   module XML
