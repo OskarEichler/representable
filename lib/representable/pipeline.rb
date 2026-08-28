@@ -47,7 +47,7 @@ module Representable
       def call(input, options)
         {}.tap do |hsh|
           input.each do |key, item_fragment|
-            result = super(item_fragment, options)
+            result = super(item_fragment, options.dup)
             hsh[key] = result unless Pipeline::Stop == result
           end
         end
