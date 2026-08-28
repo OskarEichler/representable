@@ -83,7 +83,7 @@ module Representable
       return func.inspect unless location && location[1] > 0
 
       line = nil
-      File.open(location[0]) do |file|
+      File.open(location[0], "rb") do |file|
         location[1].times { break unless line = file.gets }
       end
       name = line && line.match(/^\s*(\w+)/)
