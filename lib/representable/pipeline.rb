@@ -47,7 +47,7 @@ module Representable
       def call(input, options)
         {}.tap do |hsh|
           input.each { |key, item_fragment|
-            hsh[key] = super(item_fragment, options) }# DISCUSS: NO :fragment set.
+            hsh[key] = super(item_fragment, options.dup) }# DISCUSS: NO :fragment set.
         end
       end
     end
