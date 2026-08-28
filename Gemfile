@@ -8,5 +8,4 @@ group :test do
   gem "nokogiri", require: false
   gem "ostruct"
 end
-gem 'pry-byebug'
 

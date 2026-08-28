@@ -1,6 +1,12 @@
 require "test_helper"
 
 class Profiler
+  SUPPORTED_ENGINES = %w[ruby jruby].freeze
+
+  def self.available?
+    SUPPORTED_ENGINES.include?(RUBY_ENGINE)
+  end
+
   def self.profile(&block)
     case RUBY_ENGINE
       when "ruby"
@@ -87,6 +93,8 @@ class CachedTest < Minitest::Spec
 
     # profiling
     it do
+      skip "no profiler available for #{RUBY_ENGINE}" unless Profiler.available?
+
       representer.to_hash
 
       data = Profiler.profile { representer.to_hash }
@@ -141,6 +149,8 @@ class CachedTest < Minitest::Spec
     end
 
     it "xxx" do
+      skip "no profiler available for #{RUBY_ENGINE}" unless Profiler.available?
+
       representer = AlbumRepresenter.new(Model::Album.new)
       representer.from_hash(album_hash)
 
