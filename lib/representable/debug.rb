@@ -84,7 +84,7 @@ module Representable
 
       line = nil
       File.open(location[0], "rb") do |file|
-        location[1].times { break unless line = file.gets }
+        location[1].times { break unless (line = file.gets) }
       end
       name = line && line.match(/^\s*(\w+)/)
       name ? name[1] : func.inspect
