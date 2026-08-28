@@ -45,11 +45,20 @@ module Representable
 
     class Hash < Pipeline
       def call(input, options)
+        had_fragment = options.key?(:fragment)
+        fragment = options[:fragment] if had_fragment
+
         {}.tap do |hsh|
           input.each do |key, item_fragment|
-            result = super(item_fragment, options.dup)
+            result = super(item_fragment, options)
             hsh[key] = result unless Pipeline::Stop == result
           end
+        end
+      ensure
+        if had_fragment
+          options[:fragment] = fragment unless options[:fragment].equal?(fragment)
+        else
+          options.delete(:fragment) if options.key?(:fragment)
         end
       end
     end
