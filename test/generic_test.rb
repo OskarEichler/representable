@@ -1,7 +1,7 @@
 require "test_helper"
 
 # TODO: rename/restructure to CollectionTest.
-class GenericTest < MiniTest::Spec
+class GenericTest < Minitest::Spec
   let(:new_album)  { OpenStruct.new.extend(representer) }
   let(:album)      { OpenStruct.new(:songs => ["Fuck Armageddon"]).extend(representer) }
   let(:song) { OpenStruct.new(:title => "Resist Stance") }
@@ -26,7 +26,7 @@ class GenericTest < MiniTest::Spec
     # when collection is nil, it doesn't get rendered:
     for_formats(
       :hash => [Representable::Hash, {}],
-      :xml  => [Representable::XML, "<open_struct></open_struct>"],
+      :xml  => [Representable::XML, "<album></album>"],
       :yaml => [Representable::YAML, "--- {}\n"] # FIXME: this doesn't look right.
     ) do |format, mod, output, _input|
       describe "nil collections" do

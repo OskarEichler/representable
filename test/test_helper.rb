@@ -1,18 +1,22 @@
 require "pry-byebug"
+require "ostruct"
 require "representable"
 
 require "minitest/autorun"
-require "test_xml/mini_test"
 
 require "representable/debug"
 require "minitest/assertions"
+require "xml_assertions"
 
-module MiniTest::Assertions
+module Minitest::Assertions
+  include XmlAssertions
+
   def assert_equal_xml(text, subject)
     assert_equal text.gsub("\n", "").gsub(/(\s\s+)/, ""), subject.gsub("\n", "").gsub(/(\s\s+)/, "")
   end
 end
 String.infect_an_assertion :assert_equal_xml, :must_xml
+Minitest::Expectations.infect_an_assertion :assert_xml_equal, :must_equal_xml
 
 # TODO: delete all that in 4.0:
 class Album
@@ -56,7 +60,7 @@ module AssertJson
   end
 end
 
-MiniTest::Spec.class_eval do
+Minitest::Spec.class_eval do
   include AssertJson::Assertions
   include XmlHelper
 
@@ -136,7 +140,7 @@ MiniTest::Spec.class_eval do
   include TestMethods
 end
 
-class BaseTest < MiniTest::Spec
+class BaseTest < Minitest::Spec
   let(:new_album)  { OpenStruct.new.extend(representer) }
   let(:album)      { OpenStruct.new(:songs => ["Fuck Armageddon"]).extend(representer) }
   let(:song) { OpenStruct.new(:title => "Resist Stance") }

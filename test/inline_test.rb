@@ -1,6 +1,6 @@
 require "test_helper"
 
-class InlineTest < MiniTest::Spec
+class InlineTest < Minitest::Spec
   let(:song)    { Song.new("Alive") }
   let(:request) { representer.prepare(OpenStruct.new(:song => song)) }
 

@@ -2,7 +2,7 @@ require "test_helper"
 
 # tests defining representers in modules, decorators and classes and the inheritance when combined.
 
-class ConfigInheritTest < MiniTest::Spec
+class ConfigInheritTest < Minitest::Spec
   def assert_cloned(child, parent, property)
     child_def  = child.representable_attrs.get(property)
     parent_def = parent.representable_attrs.get(property)

@@ -9,7 +9,7 @@ class XmlPublicMethodsTest < Minitest::Spec
     property :name
   end
 
-  let(:data) { %{<data><id>1</id><name>Rancid</name></data>} }
+  let(:data) { %{<band><id>1</id><name>Rancid</name></band>} }
 
   it { _(BandRepresenter.new(Band.new).from_xml(data)[:id, :name]).must_equal %w[1 Rancid] }
   it { _(BandRepresenter.new(Band.new).parse(data)[:id, :name]).must_equal %w[1 Rancid] }
@@ -22,7 +22,7 @@ class XmlPublicMethodsTest < Minitest::Spec
   it { BandRepresenter.new(band).render.must_equal_xml data }
 end
 
-class XmlTest < MiniTest::Spec
+class XmlTest < Minitest::Spec
   class Band
     include Representable::XML
     property :name
@@ -188,7 +188,7 @@ class XmlTest < MiniTest::Spec
   end
 end
 
-class AttributesTest < MiniTest::Spec
+class AttributesTest < Minitest::Spec
   describe ":as => rel, :attribute => true" do
     class Link
       include Representable::XML
@@ -234,7 +234,7 @@ class CDataBand
   end
 end
 
-class TypedPropertyTest < MiniTest::Spec
+class TypedPropertyTest < Minitest::Spec
   class Band
     include Representable::XML
     property :name
@@ -345,7 +345,7 @@ class XMLPropertyTest < Minitest::Spec
   }
 end
 
-class XMLCollectionTest < MiniTest::Spec
+class XMLCollectionTest < Minitest::Spec
   Band        = Struct.new(:name)
   Compilation = Struct.new(:bands)
 
@@ -451,7 +451,7 @@ class XMLCollectionTest < MiniTest::Spec
   end
 
   require "representable/xml/hash"
-  class LonelyRepresenterTest < MiniTest::Spec
+  class LonelyRepresenterTest < Minitest::Spec
     # TODO: where is the XML::Hash test?
     module SongRepresenter
       include Representable::XML
@@ -495,7 +495,7 @@ class XMLCollectionTest < MiniTest::Spec
       end
 
       let(:songs) { {"one" => "Graveyards", "two" => "Can't Take Them All"} }
-      let(:xml_doc) { "<favs one=\"Graveyards\" two=\"Can't Take Them All\" />" }
+      let(:xml_doc) { "<songs one=\"Graveyards\" two=\"Can't Take Them All\" />" }
 
       describe "#to_xml" do
         it "renders hash" do
@@ -503,11 +503,11 @@ class XMLCollectionTest < MiniTest::Spec
         end
 
         it "respects :exclude" do
-          assert_xml_equal "<favs two=\"Can't Take Them All\" />", songs.extend(representer).to_xml(:exclude => [:one])
+          assert_xml_equal "<songs two=\"Can't Take Them All\" />", songs.extend(representer).to_xml(:exclude => [:one])
         end
 
         it "respects :include" do
-          assert_xml_equal "<favs two=\"Can't Take Them All\" />", songs.extend(representer).to_xml(:include => [:two])
+          assert_xml_equal "<songs two=\"Can't Take Them All\" />", songs.extend(representer).to_xml(:include => [:two])
         end
 
         it "renders hash with decorator" do
@@ -536,7 +536,7 @@ class XMLCollectionTest < MiniTest::Spec
   end
 end
 
-class XmlHashTest < MiniTest::Spec
+class XmlHashTest < Minitest::Spec
   # scalar, no object
   describe "plain text" do
     representer!(module: Representable::XML) do

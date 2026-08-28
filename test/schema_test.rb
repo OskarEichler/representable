@@ -1,7 +1,7 @@
 require "test_helper"
 
 # Include Inherit Module And Decorator Test
-class SchemaTest < MiniTest::Spec
+class SchemaTest < Minitest::Spec
   module Genre
     include Representable
     property :genre
@@ -152,7 +152,7 @@ class SchemaTest < MiniTest::Spec
   end
 end
 
-class ApplyTest < MiniTest::Spec
+class ApplyTest < Minitest::Spec
   class AlbumDecorator < Representable::Decorator
     include Representable::Hash
 

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class FilterPipelineTest < MiniTest::Spec
+class FilterPipelineTest < Minitest::Spec
   let(:block1) { ->(input, _options) { "1: #{input}" } }
   let(:block2) { ->(input, _options) { "2: #{input}" } }
 
@@ -9,7 +9,7 @@ class FilterPipelineTest < MiniTest::Spec
   it { _(subject.call("Horowitz", {})).must_equal "2: 1: Horowitz" }
 end
 
-class FilterTest < MiniTest::Spec
+class FilterTest < Minitest::Spec
   representer! do
     property :title
 
@@ -22,7 +22,7 @@ class FilterTest < MiniTest::Spec
   it {
     song = OpenStruct.new.extend(representer).from_hash("title" => "VULCAN EARS", "track" => "Nine")
     _(song.title).must_equal "VULCAN EARS"
-    _(song.track).must_equal "nine,{\"title\"=>\"VULCAN EARS\", \"track\"=>\"Nine\"}"
+    _(song.track).must_equal "nine,#{{"title" => "VULCAN EARS", "track" => "Nine"}.inspect}"
   }
 
   it {
@@ -33,7 +33,7 @@ class FilterTest < MiniTest::Spec
       ).extend(representer).to_hash
     ).must_equal({
                    "title" => "vulcan ears",
-                   "track" => "NINE,{\"title\"=>\"vulcan ears\"},{}"
+                   "track" => "NINE,#{{"title" => "vulcan ears"}.inspect},#{{}.inspect}"
                  })
   }
 
@@ -56,7 +56,7 @@ class FilterTest < MiniTest::Spec
   end
 end
 
-# class RenderFilterTest < MiniTest::Spec
+# class RenderFilterTest < Minitest::Spec
 #   representer! do
 #     property :track, :render_filter => [lambda { |val, options| "#{val}-1" } ]
 #     property :track, :render_filter => [lambda { |val, options| "#{val}-2" } ], :inherit => true

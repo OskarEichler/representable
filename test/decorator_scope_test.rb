@@ -1,7 +1,7 @@
 require "test_helper"
 
 # TODO: remove in 2.0.
-class DecoratorScopeTest < MiniTest::Spec
+class DecoratorScopeTest < Minitest::Spec
   representer! do
     property :title, :getter => ->(*) { title_from_representer }, :decorator_scope => true
   end

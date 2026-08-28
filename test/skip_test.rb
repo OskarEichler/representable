@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SkipParseTest < MiniTest::Spec
+class SkipParseTest < Minitest::Spec
   representer! do
     property :title, skip_parse: ->(options) { options[:user_options][:skip?] and options[:fragment] == "skip me" }
     property :band,
@@ -51,7 +51,7 @@ class SkipParseTest < MiniTest::Spec
   end
 end
 
-class SkipRenderTest < MiniTest::Spec
+class SkipRenderTest < Minitest::Spec
   representer! do
     property :title
     property :band,

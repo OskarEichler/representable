@@ -2,13 +2,6 @@ require 'representable/binding'
 
 module Representable
   module XML
-    module_function def Node(document, name, attributes={})
-      node = Nokogiri::XML::Node.new(name.to_s, document) # Java::OrgW3cDom::DOMException: NAMESPACE_ERR: An attempt is made to create or change an object in a way which is incorrect with regard to namespaces.
-
-      attributes.each { |k, v| node[k] = v } # TODO: benchmark.
-      node
-    end
-
     class Binding < Representable::Binding
       def self.build_for(definition)
         return Collection.new(definition)      if definition.array?
@@ -24,7 +17,7 @@ module Representable
         wrap_node = parent
 
         if wrap = self[:wrap]
-          parent << wrap_node = XML::Node(parent.document, wrap)
+          parent << wrap_node = parent.document.create_element(wrap.to_s)
         end
 
         wrap_node << serialize_for(fragments, parent, as)
@@ -39,7 +32,7 @@ module Representable
 
       # Creates wrapped node for the property.
       def serialize_for(value, parent, as)
-        node = XML::Node(parent.document, as) # node doesn't have attr="" attributes!!!
+        node = parent.document.create_element(as.to_s) # node doesn't have attr="" attributes!!!
         serialize_node(node, value, as)
       end
 
@@ -106,7 +99,7 @@ module Representable
       class Hash < Collection
         def serialize_for(value, parent, as)
           set_for(parent, value.collect do |k, v|
-            node = XML::Node(parent.document, k)
+            node = parent.document.create_element(k.to_s)
             serialize_node(node, v, as)
           end)
         end

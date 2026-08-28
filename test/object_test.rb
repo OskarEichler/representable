@@ -1,7 +1,7 @@
 require "test_helper"
 require "representable/object"
 
-class ObjectTest < MiniTest::Spec
+class ObjectTest < Minitest::Spec
   Song  = Struct.new(:title, :album)
   Album = Struct.new(:name, :songs)
 

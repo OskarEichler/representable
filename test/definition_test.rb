@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DefinitionTest < MiniTest::Spec
+class DefinitionTest < Minitest::Spec
   Definition = Representable::Definition
 
   # TODO: test that we DON'T clone options, that must happen in
@@ -91,7 +91,7 @@ class DefinitionTest < MiniTest::Spec
   # #inspect
   describe "#inspect" do
     it {
-      _(Definition.new(:songs).inspect).must_equal "#<Representable::Definition ==>songs @options={:name=>\"songs\", :parse_filter=>[], :render_filter=>[]}>"
+      _(Definition.new(:songs).inspect).must_equal "#<Representable::Definition ==>songs @options=#{{name: "songs", parse_filter: [], render_filter: []}.inspect}>"
     }
   end
 

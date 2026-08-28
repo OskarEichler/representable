@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HashBindingTest < MiniTest::Spec
+class HashBindingTest < Minitest::Spec
   module SongRepresenter
     include Representable::JSON
     property :name

@@ -1,7 +1,7 @@
 require "test_helper"
 require "representable/xml/hash"
 
-class XMLBindingTest < MiniTest::Spec
+class XMLBindingTest < Minitest::Spec
   module SongRepresenter
     include Representable::XML
     property :name

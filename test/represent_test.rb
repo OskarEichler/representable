@@ -1,6 +1,6 @@
 require "test_helper"
 
-class RepresentTest < MiniTest::Spec
+class RepresentTest < Minitest::Spec
   let(:songs) { [song, Song.new("Can't Take Them All")] }
   let(:song) { Song.new("Days Go By") }
 

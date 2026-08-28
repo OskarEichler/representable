@@ -7,7 +7,7 @@ class Profiler
         require "ruby-prof"
 
         output = StringIO.new
-        profile_result = RubyProf.profile(&block)
+        profile_result = RubyProf::Profile.profile(&block)
         printer = RubyProf::FlatPrinter.new(profile_result)
         printer.print(output)
         output.string
@@ -24,7 +24,7 @@ class Profiler
   end
 end
 
-class CachedTest < MiniTest::Spec
+class CachedTest < Minitest::Spec
   # TODO: also test with feature(Cached)
 
   module Model
@@ -55,7 +55,7 @@ class CachedTest < MiniTest::Spec
     let(:album_hash) do
       {
         "name"  => "Louder And Even More Dangerous",
-        "songs" => [{"title"=>"Southbound:{:volume=>10}"}, {"title"=>"Jailbreak:{:volume=>10}"}]
+        "songs" => [{"title" => "Southbound:#{{volume: 10}.inspect}"}, {"title" => "Jailbreak:#{{volume: 10}.inspect}"}]
       }
     end
 
@@ -72,8 +72,8 @@ class CachedTest < MiniTest::Spec
         {
           "name"  => "Live And Dangerous",
           "songs" => [
-            {"title"=>"Jailbreak:{:volume=>9}"}, {"title"=>"Southbound:{:volume=>9}"},
-            {"title"=>"Emerald:{:volume=>9}"}
+            {"title" => "Jailbreak:#{{volume: 9}.inspect}"}, {"title" => "Southbound:#{{volume: 9}.inspect}"},
+            {"title" => "Emerald:#{{volume: 9}.inspect}"}
           ]
         }
       ) # called in Deserializer/Serializer

@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class OptionTest < MiniTest::Spec
+class OptionTest < Minitest::Spec
   class Callable
     include Uber::Callable
     def call(*); "callable" end

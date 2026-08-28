@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PipelineTest < MiniTest::Spec
+class PipelineTest < Minitest::Spec
   Song   = Struct.new(:title, :artist)
   Artist = Struct.new(:name)
   Album  = Struct.new(:ratings, :artists)

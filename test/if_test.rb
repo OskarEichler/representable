@@ -1,6 +1,6 @@
 require "test_helper"
 
-class IfTest < MiniTest::Spec
+class IfTest < Minitest::Spec
   let(:band_class) do
     Class.new do
       include Representable::Hash

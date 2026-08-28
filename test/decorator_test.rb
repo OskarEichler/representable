@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DecoratorTest < MiniTest::Spec
+class DecoratorTest < Minitest::Spec
   class SongRepresentation < Representable::Decorator
     include Representable::JSON
     property :name
@@ -86,7 +86,7 @@ class DecoratorTest < MiniTest::Spec
 end
 
 require "uber/inheritable_attr"
-class InheritanceWithDecoratorTest < MiniTest::Spec
+class InheritanceWithDecoratorTest < Minitest::Spec
   class Twin
     extend Uber::InheritableAttr
     inheritable_attr :representer_class
