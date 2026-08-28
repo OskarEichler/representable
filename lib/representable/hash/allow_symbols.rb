@@ -16,9 +16,9 @@ module Representable
 
     module Conversion
       def self.stringify_keys(hash)
-        hash.keys.collect do |key|
-          [ key.to_s, hash[key] ]
-        end.to_h
+        hash.keys.each_with_object({}) do |key, result|
+          result[key.to_s] = hash[key]
+        end
       end
     end
   end
