@@ -33,13 +33,14 @@ module Representable
 
     # Parses the body as JSON and delegates to #from_hash.
     def from_json(data, *args)
-      data = MultiJSON.parse(data)
+      data = defined?(::MultiJSON) ? ::MultiJSON.parse(data) : ::MultiJson.load(data)
       from_hash(data, *args)
     end
 
     # Returns a JSON string representing this object.
     def to_json(*args)
-      MultiJSON.generate to_hash(*args)
+      data = to_hash(*args)
+      defined?(::MultiJSON) ? ::MultiJSON.generate(data) : ::MultiJson.dump(data)
     end
 
     alias_method :render, :to_json
