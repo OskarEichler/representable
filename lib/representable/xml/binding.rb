@@ -140,7 +140,7 @@ module Representable
           parent
         end
 
-        def read(node, as)
+        def read(node, _as)
           deserialize_from(node)
         end
 
