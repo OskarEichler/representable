@@ -20,7 +20,8 @@ module XmlAssertions
     end
   end
 
-  def assert_xml_equal(expected, actual, msg = nil)
+  # Arguments read (asserted, expected), the assertion order used throughout this suite.
+  def assert_xml_equal(actual, expected, msg = nil)
     assert_equal XmlAssertions.canonicalize(expected),
                  XmlAssertions.canonicalize(actual),
                  msg

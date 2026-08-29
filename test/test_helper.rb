@@ -10,12 +10,11 @@ require "xml_assertions"
 module Minitest::Assertions
   include XmlAssertions
 
-  def assert_equal_xml(text, subject)
+  # Arguments read (asserted, expected), the assertion order used throughout this suite.
+  def assert_equal_xml(subject, text)
     assert_equal text.gsub("\n", "").gsub(/(\s\s+)/, ""), subject.gsub("\n", "").gsub(/(\s\s+)/, "")
   end
 end
-Minitest::Expectations.infect_an_assertion :assert_equal_xml, :must_xml
-Minitest::Expectations.infect_an_assertion :assert_xml_equal, :must_equal_xml
 
 # TODO: delete all that in 4.0:
 class Album
@@ -88,7 +87,7 @@ Minitest::Spec.class_eval do
     end
 
     def must_equal_document(expected, *rest)
-      return @test.assert_xml_equal(expected, document, *rest) if @format == :xml
+      return @test.assert_xml_equal(document, expected, *rest) if @format == :xml
 
       @test.assert_equal(expected, document, *rest)
     end

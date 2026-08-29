@@ -32,7 +32,7 @@ class XMLBindingTest < Minitest::Spec
       it "inserts with #write" do
         parent = Nokogiri::XML::Node.new("song", @doc)
         @property.write(parent, "The Gargoyle", "name")
-        assert_xml_equal("<song name=\"The Gargoyle\" />", parent.to_s)
+        assert_xml_equal(parent.to_s, "<song name=\"The Gargoyle\" />")
       end
     end
   end
@@ -49,7 +49,7 @@ class XMLBindingTest < Minitest::Spec
     it "inserts with #write" do
       parent = Nokogiri::XML::Node.new("song", @doc)
       @property.write(parent, "The Gargoyle", "song")
-      assert_xml_equal("<song>The Gargoyle</song>", parent.to_s)
+      assert_xml_equal(parent.to_s, "<song>The Gargoyle</song>")
     end
   end
 end

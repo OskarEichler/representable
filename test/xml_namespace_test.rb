@@ -77,7 +77,8 @@ class NamespaceXMLTest < Minitest::Spec
 
   # default namespace for library
   it "what" do
-    _(Library.new(Model::Library.new(book)).to_xml).must_xml(
+    assert_equal_xml(
+      Library.new(Model::Library.new(book)).to_xml,
 
       # :simple-xml
       %{<library xmlns="http://eric.van-der-vlist.com/ns/library">
@@ -136,7 +137,9 @@ class Namespace2XMLTest < Minitest::Spec
   it "renders" do
     skip "JRuby's DOM raises NAMESPACE_ERR for prefixed elements" if RUBY_ENGINE == "jruby"
 
-    _(Library.new(Model::Library.new(book)).to_xml).must_xml(
+    assert_equal_xml(
+      Library.new(Model::Library.new(book)).to_xml,
+
       # :map-xml
       %{<lib:library xmlns:lib=\"http://eric.van-der-vlist.com/ns/library\" xmlns:hr=\"http://eric.van-der-vlist.com/ns/person\">
   <lib:book id=\"1\">

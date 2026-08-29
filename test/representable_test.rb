@@ -88,7 +88,7 @@ class RepresentableTest < Minitest::Spec
       band.name = "Bodyjar"
 
       assert_json "{\"band\":{\"name\":\"Bodyjar\"}}", band.to_json
-      assert_xml_equal "<band><name>Bodyjar</name></band>", band.to_xml
+      assert_xml_equal(band.to_xml, "<band><name>Bodyjar</name></band>")
     end
 
     it "allows extending with different representers subsequentially" do
@@ -103,7 +103,7 @@ class RepresentableTest < Minitest::Spec
       end
 
       @song = Song.new("Days Go By")
-      assert_xml_equal "<song name=\"Days Go By\"/>", @song.extend(SongXmlRepresenter).to_xml
+      assert_xml_equal(@song.extend(SongXmlRepresenter).to_xml, "<song name=\"Days Go By\"/>")
       assert_json "{\"name\":\"Days Go By\"}", @song.extend(SongJsonRepresenter).to_json
     end
 

@@ -127,8 +127,8 @@ class XMLDisableWrapTest < Minitest::Spec
   let(:band) { BandDecorator.prepare(Band.new("Social Distortion")) }
 
   it do
-    _(band.to_xml).must_equal_xml "<bands><name>Social Distortion</name></bands>"
-    _(band.to_xml(wrap: "combo")).must_equal_xml "<combo><name>Social Distortion</name></combo>"
+    assert_xml_equal(band.to_xml, "<bands><name>Social Distortion</name></bands>")
+    assert_xml_equal(band.to_xml(wrap: "combo"), "<combo><name>Social Distortion</name></combo>")
   end
 
   class AlbumDecorator < Representable::Decorator
