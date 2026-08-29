@@ -17,7 +17,7 @@ module Representable
         wrap_node = parent
 
         if wrap = self[:wrap]
-          parent << wrap_node = parent.document.create_element(wrap.to_s)
+          parent << wrap_node = XML::Node(parent.document, wrap)
         end
 
         wrap_node << serialize_for(fragments, parent, as)
@@ -32,7 +32,7 @@ module Representable
 
       # Creates wrapped node for the property.
       def serialize_for(value, parent, as)
-        node = parent.document.create_element(as.to_s) # node doesn't have attr="" attributes!!!
+        node = XML::Node(parent.document, as) # node doesn't have attr="" attributes!!!
         serialize_node(node, value, as)
       end
 
@@ -99,7 +99,7 @@ module Representable
       class Hash < Collection
         def serialize_for(value, parent, as)
           set_for(parent, value.collect do |k, v|
-            node = parent.document.create_element(k.to_s)
+            node = XML::Node(parent.document, k)
             serialize_node(node, v, as)
           end)
         end

@@ -9,6 +9,13 @@ module Representable
     autoload :Collection, 'representable/xml/collection'
     autoload :Namespace, 'representable/xml/namespace'
 
+    module_function def Node(document, name, attributes={})
+      node = document.create_element(name.to_s)
+
+      attributes.each { |k, v| node[k] = v } # TODO: benchmark.
+      node
+    end
+
     def self.included(base)
       base.class_eval do
         include Representable
@@ -48,7 +55,7 @@ module Representable
       options[:doc] = Nokogiri::XML::Document.new # DISCUSS: why do we need a fresh Document here?
       root_tag = options[:wrap] || representation_wrap(options)
 
-      create_representation_with(options[:doc].create_element(root_tag.to_s), options, Binding)
+      create_representation_with(Node(options[:doc], root_tag.to_s), options, Binding)
     end
 
     def to_xml(*args)
