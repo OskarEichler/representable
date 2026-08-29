@@ -1,6 +1,6 @@
 require "test_helper"
 
-class BindingTest < MiniTest::Spec
+class BindingTest < Minitest::Spec
   Binding = Representable::Binding
   let(:render_nil_definition) { Representable::Definition.new(:song, :render_nil => true) }
 

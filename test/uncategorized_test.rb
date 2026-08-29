@@ -1,6 +1,6 @@
 require "test_helper"
 
-class StopWhenIncomingObjectFragmentIsNilTest < MiniTest::Spec
+class StopWhenIncomingObjectFragmentIsNilTest < Minitest::Spec
   Album = Struct.new(:id, :songs)
   Song  = Struct.new(:title)
 
@@ -31,7 +31,7 @@ class StopWhenIncomingObjectFragmentIsNilTest < MiniTest::Spec
   end
 end
 
-class RenderPipelineOptionTest < MiniTest::Spec
+class RenderPipelineOptionTest < Minitest::Spec
   Album   = Struct.new(:id, :songs)
   NilToNA = ->(input, _options) { input.nil? ? "n/a" : input }
 
@@ -51,7 +51,7 @@ class RenderPipelineOptionTest < MiniTest::Spec
   end
 end
 
-class ParsePipelineOptionTest < MiniTest::Spec
+class ParsePipelineOptionTest < Minitest::Spec
   Album   = Struct.new(:id, :songs)
   NilToNA = ->(input, _options) { input.nil? ? "n/a" : input }
 

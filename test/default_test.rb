@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DefaultTest < MiniTest::Spec
+class DefaultTest < Minitest::Spec
   Song = Struct.new(:id, :title)
 
   representer! do

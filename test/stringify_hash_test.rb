@@ -1,6 +1,6 @@
 require "test_helper"
 
-class StringifyHashTest < MiniTest::Spec
+class StringifyHashTest < Minitest::Spec
   describe "#from_hash" do
     representer!(:name => :song_representer) do
       include Representable::Hash

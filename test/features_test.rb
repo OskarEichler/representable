@@ -1,6 +1,6 @@
 require "test_helper"
 
-class FeaturesTest < MiniTest::Spec
+class FeaturesTest < Minitest::Spec
   module Title
     def title; "Is It A Lie"; end
   end
@@ -54,7 +54,7 @@ class FeaturesTest < MiniTest::Spec
   end
 end
 
-class FeatureInclusionOrderTest < MiniTest::Spec
+class FeatureInclusionOrderTest < Minitest::Spec
   module Title
     def title
       "I was first!"

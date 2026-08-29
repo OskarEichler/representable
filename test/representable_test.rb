@@ -1,6 +1,6 @@
 require "test_helper"
 
-class RepresentableTest < MiniTest::Spec
+class RepresentableTest < Minitest::Spec
   class Band
     include Representable::Hash
     property :name

@@ -24,7 +24,7 @@ module JsonTest
     it { _(BandRepresenter.new(band).render).must_equal json }
   end
 
-  class APITest < MiniTest::Spec
+  class APITest < Minitest::Spec
     Json = Representable::JSON
     Def = Representable::Definition
 
@@ -167,7 +167,7 @@ module JsonTest
     end
   end
 
-  class PropertyTest < MiniTest::Spec
+  class PropertyTest < Minitest::Spec
     describe "property :name" do
       class Band
         include Representable::JSON
@@ -250,7 +250,7 @@ module JsonTest
     end
   end
 
-  class CollectionTest < MiniTest::Spec
+  class CollectionTest < Minitest::Spec
     describe "collection :name" do
       class CD
         include Representable::JSON
@@ -331,7 +331,7 @@ module JsonTest
     end
   end
 
-  class HashTest < MiniTest::Spec
+  class HashTest < Minitest::Spec
     describe "hash :songs" do
       representer!(:module => Representable::JSON) do
         hash :songs

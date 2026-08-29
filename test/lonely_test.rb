@@ -2,7 +2,7 @@ require "test_helper"
 
 require "representable/json/hash"
 
-class LonelyRepresenterTest < MiniTest::Spec
+class LonelyRepresenterTest < Minitest::Spec
   # test ::items without arguments, render-only.
   for_formats(
     :hash => [Representable::Hash::Collection, [{"name"=>"Resist Stance"}, {"name"=>"Suffer"}]],
@@ -226,7 +226,7 @@ class LonelyRepresenterTest < MiniTest::Spec
 end
 
 # describe "Hash::Collection with :include" do
-class CollectionWithIncludeTest < MiniTest::Spec
+class CollectionWithIncludeTest < Minitest::Spec
   Song = Struct.new(:id, :title)
 
   representer!(decorator: true, module: Representable::Hash::Collection) do

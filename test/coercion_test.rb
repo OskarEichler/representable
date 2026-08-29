@@ -3,7 +3,7 @@
 require "test_helper"
 require "representable/coercion"
 
-class CoercionTest < MiniTest::Spec
+class CoercionTest < Minitest::Spec
   representer! do
     include Representable::Coercion
 

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ParsePipelineTest < MiniTest::Spec
+class ParsePipelineTest < Minitest::Spec
   Album  = Struct.new(:id, :artist, :songs)
   Artist = Struct.new(:email)
   Song   = Struct.new(:title)

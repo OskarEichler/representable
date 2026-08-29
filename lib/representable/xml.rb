@@ -9,6 +9,13 @@ module Representable
     autoload :Collection, 'representable/xml/collection'
     autoload :Namespace, 'representable/xml/namespace'
 
+    module_function def Node(document, name, attributes={})
+      node = document.create_element(name.to_s)
+
+      attributes.each { |k, v| node[k] = v } # TODO: benchmark.
+      node
+    end
+
     def self.included(base)
       base.class_eval do
         include Representable

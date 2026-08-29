@@ -134,6 +134,8 @@ class Namespace2XMLTest < Minitest::Spec
   # :map-class end
 
   it "renders" do
+    skip "JRuby's DOM raises NAMESPACE_ERR for prefixed elements" if RUBY_ENGINE == "jruby"
+
     Library.new(Model::Library.new(book)).to_xml.must_xml(
       # :map-xml
       %{<lib:library xmlns:lib=\"http://eric.van-der-vlist.com/ns/library\" xmlns:hr=\"http://eric.van-der-vlist.com/ns/person\">
@@ -154,6 +156,8 @@ class Namespace2XMLTest < Minitest::Spec
   end
 
   it "parses" do
+    skip "JRuby's DOM recovers from the malformed tags below differently" if RUBY_ENGINE == "jruby"
+
     lib = Model::Library.new
     # :parse-call
     Library.new(lib).from_xml(

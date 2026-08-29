@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ExecContextTest < MiniTest::Spec
+class ExecContextTest < Minitest::Spec
   for_formats(
     :hash => [Representable::Hash, {Song => "Rebel Fate"}, {Song=>"Timing"}]
     # :xml  => [Representable::XML, "<open_struct>\n  <song>\n    <name>Alive</name>\n  </song>\n</open_struct>", "<open_struct><song><name>You've Taken Everything</name></song>/open_struct>"],

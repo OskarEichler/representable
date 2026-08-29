@@ -1,6 +1,6 @@
 require "test_helper"
 
-class WrapTest < MiniTest::Spec
+class WrapTest < Minitest::Spec
   class HardcoreBand
     include Representable::Hash
   end
@@ -46,7 +46,7 @@ class WrapTest < MiniTest::Spec
   end
 end
 
-class HashDisableWrapTest < MiniTest::Spec
+class HashDisableWrapTest < Minitest::Spec
   Band  = Struct.new(:name, :label)
   Album = Struct.new(:band)
   Label = Struct.new(:name)
@@ -107,7 +107,7 @@ class HashDisableWrapTest < MiniTest::Spec
   end
 end
 
-class XMLDisableWrapTest < MiniTest::Spec
+class XMLDisableWrapTest < Minitest::Spec
   Band  = Struct.new(:name, :label)
   Album = Struct.new(:band)
   Label = Struct.new(:name)

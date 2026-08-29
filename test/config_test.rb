@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ConfigTest < MiniTest::Spec
+class ConfigTest < Minitest::Spec
   subject { Representable::Config.new(Representable::Definition) }
   PunkRock = Class.new
   Definition = Representable::Definition

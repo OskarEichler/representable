@@ -1,6 +1,6 @@
 require "test_helper"
 
-class InheritTest < MiniTest::Spec
+class InheritTest < Minitest::Spec
   # it's important to have a global module so we can test if stuff gets overridden in the original module.
   module SongRepresenter
     include Representable::Hash
@@ -227,7 +227,7 @@ class InheritTest < MiniTest::Spec
   end
 end
 
-# class InheritancingTest < MiniTest::Spec
+# class InheritancingTest < Minitest::Spec
 #   class SongDecorator < Representable::Decorator
 #     include Representable::Hash
 #     property :album do

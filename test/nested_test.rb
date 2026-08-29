@@ -1,6 +1,6 @@
 require "test_helper"
 
-class NestedTest < MiniTest::Spec
+class NestedTest < Minitest::Spec
   Album = Struct.new(:label, :owner, :amount)
 
   for_formats(

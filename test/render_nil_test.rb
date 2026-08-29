@@ -1,6 +1,6 @@
 require "test_helper"
 
-class RenderNilTest < MiniTest::Spec
+class RenderNilTest < Minitest::Spec
   Song = Struct.new(:title)
 
   describe "render_nil: true" do

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class AsTest < MiniTest::Spec
+class AsTest < Minitest::Spec
   for_formats(
     :hash => [Representable::Hash, {"title" => "Wie Es Geht"}, {"title" => "Revolution"}]
     # :xml  => [Representable::XML, "<open_struct>\n  <song>\n    <name>Alive</name>\n  </song>\n</open_struct>", "<open_struct><song><name>You've Taken Everything</name></song>/open_struct>"],
@@ -32,15 +32,15 @@ class AsTest < MiniTest::Spec
         property :name, :as => ->(options) { options[:user_options].inspect }
       end
 
-      it { render(song, user_options: {volume: 1}).must_equal_document({"{:volume=>1}" => "Revolution"}) }
-      it { _(parse(song, {"{:volume=>1}" => "Wie Es Geht"}, user_options: {volume: 1}).name).must_equal "Wie Es Geht" }
+      it { render(song, user_options: {volume: 1}).must_equal_document({{volume: 1}.inspect => "Revolution"}) }
+      it { _(parse(song, {{volume: 1}.inspect => "Wie Es Geht"}, user_options: {volume: 1}).name).must_equal "Wie Es Geht" }
     end
   end
 end
 
 # hash: to_hash(wrap: ) is representation_wrap
 
-class AsXmlTest < MiniTest::Spec
+class AsXmlTest < Minitest::Spec
   Band  = Struct.new(:name, :label)
   Album = Struct.new(:band)
   Label = Struct.new(:name)

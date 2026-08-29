@@ -1,13 +1,19 @@
 require "test_helper"
 
 class Profiler
+  SUPPORTED_ENGINES = %w[ruby jruby].freeze
+
+  def self.available?
+    SUPPORTED_ENGINES.include?(RUBY_ENGINE)
+  end
+
   def self.profile(&block)
     case RUBY_ENGINE
       when "ruby"
         require "ruby-prof"
 
         output = StringIO.new
-        profile_result = RubyProf.profile(&block)
+        profile_result = RubyProf::Profile.profile(&block)
         printer = RubyProf::FlatPrinter.new(profile_result)
         printer.print(output)
         output.string
@@ -24,7 +30,7 @@ class Profiler
   end
 end
 
-class CachedTest < MiniTest::Spec
+class CachedTest < Minitest::Spec
   # TODO: also test with feature(Cached)
 
   module Model
@@ -55,7 +61,7 @@ class CachedTest < MiniTest::Spec
     let(:album_hash) do
       {
         "name"  => "Louder And Even More Dangerous",
-        "songs" => [{"title"=>"Southbound:{:volume=>10}"}, {"title"=>"Jailbreak:{:volume=>10}"}]
+        "songs" => [{"title" => "Southbound:#{{volume: 10}.inspect}"}, {"title" => "Jailbreak:#{{volume: 10}.inspect}"}]
       }
     end
 
@@ -72,8 +78,8 @@ class CachedTest < MiniTest::Spec
         {
           "name"  => "Live And Dangerous",
           "songs" => [
-            {"title"=>"Jailbreak:{:volume=>9}"}, {"title"=>"Southbound:{:volume=>9}"},
-            {"title"=>"Emerald:{:volume=>9}"}
+            {"title" => "Jailbreak:#{{volume: 9}.inspect}"}, {"title" => "Southbound:#{{volume: 9}.inspect}"},
+            {"title" => "Emerald:#{{volume: 9}.inspect}"}
           ]
         }
       ) # called in Deserializer/Serializer
@@ -87,6 +93,8 @@ class CachedTest < MiniTest::Spec
 
     # profiling
     it do
+      skip "no profiler available for #{RUBY_ENGINE}" unless Profiler.available?
+
       representer.to_hash
 
       data = Profiler.profile { representer.to_hash }
@@ -141,6 +149,8 @@ class CachedTest < MiniTest::Spec
     end
 
     it "xxx" do
+      skip "no profiler available for #{RUBY_ENGINE}" unless Profiler.available?
+
       representer = AlbumRepresenter.new(Model::Album.new)
       representer.from_hash(album_hash)
 

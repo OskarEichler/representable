@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ForCollectionTest < MiniTest::Spec
+class ForCollectionTest < Minitest::Spec
   module SongRepresenter
     include Representable::JSON
 

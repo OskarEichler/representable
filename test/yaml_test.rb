@@ -27,7 +27,7 @@ name: Rancid
   it { _(BandRepresenter.new(band).render).must_equal data }
 end
 
-class YamlTest < MiniTest::Spec
+class YamlTest < Minitest::Spec
   def self.yaml_representer(&block)
     Module.new do
       include Representable::YAML

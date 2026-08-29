@@ -22,7 +22,7 @@ class HashPublicMethodsTest < Minitest::Spec
   it { _(BandRepresenter.new(band).render).must_equal data }
 end
 
-class HashWithScalarPropertyTest < MiniTest::Spec
+class HashWithScalarPropertyTest < Minitest::Spec
   Album = Struct.new(:title)
 
   representer! do
@@ -51,7 +51,7 @@ class HashWithScalarPropertyTest < MiniTest::Spec
   end
 end
 
-class HashWithTypedPropertyTest < MiniTest::Spec
+class HashWithTypedPropertyTest < Minitest::Spec
   Album = Struct.new(:best_song)
 
   representer! do
@@ -98,7 +98,7 @@ class HashWithTypedPropertyTest < MiniTest::Spec
 end
 
 # TODO: move to AsTest.
-class HashWithTypedPropertyAndAs < MiniTest::Spec
+class HashWithTypedPropertyAndAs < Minitest::Spec
   representer! do
     property :song, :class => Song, :as => :hit do
       property :name
@@ -130,7 +130,7 @@ end
 #   # end
 # end
 
-class HashWithTypedCollectionTest < MiniTest::Spec
+class HashWithTypedCollectionTest < Minitest::Spec
   Album = Struct.new(:songs)
 
   representer! do
@@ -170,7 +170,7 @@ class HashWithTypedCollectionTest < MiniTest::Spec
   end
 end
 
-class HashWithScalarCollectionTest < MiniTest::Spec
+class HashWithScalarCollectionTest < Minitest::Spec
   Album = Struct.new(:songs)
   representer! { collection :songs }
 
