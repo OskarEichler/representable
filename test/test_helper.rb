@@ -14,7 +14,7 @@ module Minitest::Assertions
     assert_equal text.gsub("\n", "").gsub(/(\s\s+)/, ""), subject.gsub("\n", "").gsub(/(\s\s+)/, "")
   end
 end
-String.infect_an_assertion :assert_equal_xml, :must_xml
+Minitest::Expectations.infect_an_assertion :assert_equal_xml, :must_xml
 Minitest::Expectations.infect_an_assertion :assert_xml_equal, :must_equal_xml
 
 # TODO: delete all that in 4.0:
@@ -71,7 +71,7 @@ Minitest::Spec.class_eval do
   end
 
   def render(object, *args)
-    AssertableDocument.new(object.send("to_#{format}", *args), format)
+    AssertableDocument.new(object.send("to_#{format}", *args), format, self)
   end
 
   def parse(object, input, *args)
@@ -81,15 +81,16 @@ Minitest::Spec.class_eval do
   class AssertableDocument
     attr_reader :document
 
-    def initialize(document, format)
+    def initialize(document, format, test)
       @document = document
       @format = format
+      @test = test
     end
 
-    def must_equal_document(*args)
-      return document.must_equal_xml(*args) if @format == :xml
+    def must_equal_document(expected, *rest)
+      return @test.assert_xml_equal(expected, document, *rest) if @format == :xml
 
-      document.must_equal(*args)
+      @test.assert_equal(expected, document, *rest)
     end
   end
 

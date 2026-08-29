@@ -18,8 +18,8 @@ class XmlPublicMethodsTest < Minitest::Spec
   # to_hash
   let(:band) { Band.new("1", "Rancid") }
 
-  it { BandRepresenter.new(band).to_xml.must_equal_xml data }
-  it { BandRepresenter.new(band).render.must_equal_xml data }
+  it { _(BandRepresenter.new(band).to_xml).must_equal_xml data }
+  it { _(BandRepresenter.new(band).render).must_equal_xml data }
 end
 
 class XmlTest < Minitest::Spec
@@ -170,7 +170,7 @@ class XmlTest < Minitest::Spec
         )
         @album.extend(AlbumRepresenter)
 
-        @album.to_xml.must_equal_xml "<album>
+        _(@album.to_xml).must_equal_xml "<album>
   <song><name>Mr. Charisma</name></song>
   <song><name>I Hate My Brain</name></song>
   <song><name>Mr. Charisma</name></song>
@@ -325,7 +325,7 @@ class XMLPropertyTest < Minitest::Spec
     property :genre, attribute: true
   end
 
-  it { BandRepresenter.new(Band.new("Mute")).to_xml.must_equal_xml %{<band><theyCallUs>Mute</theyCallUs></band>} }
+  it { _(BandRepresenter.new(Band.new("Mute")).to_xml).must_equal_xml %{<band><theyCallUs>Mute</theyCallUs></band>} }
 
   class ManagerRepresenter < Representable::Decorator
     include Representable::XML
@@ -334,14 +334,14 @@ class XMLPropertyTest < Minitest::Spec
 
   #- :as with nested property
   it {
-    ManagerRepresenter.new(
+    _(ManagerRepresenter.new(
       Manager.new(
         Band.new(
           "Mute",
           "Punkrock"
         )
       )
-    ).to_xml.must_equal_xml %{<manager><band genre="Punkrock"><theyCallUs>Mute</theyCallUs></band></manager>}
+    ).to_xml).must_equal_xml %{<manager><band genre="Punkrock"><theyCallUs>Mute</theyCallUs></band></manager>}
   }
 end
 
@@ -379,7 +379,7 @@ class XMLCollectionTest < Minitest::Spec
     it "responds to #to_xml" do
       cd = Compilation.new([Band.new("Diesel Boy"), Band.new("Bad Religion")])
 
-      CompilationRepresenter.new(cd).to_xml.must_equal_xml %{<compilation>
+      _(CompilationRepresenter.new(cd).to_xml).must_equal_xml %{<compilation>
         <group><name>Diesel Boy</name></group>
         <group><name>Bad Religion</name></group>
       </compilation>}
@@ -472,11 +472,11 @@ class XMLCollectionTest < Minitest::Spec
         let(:xml_doc) { "<songs><song><name>Days Go By</name></song><song><name>Can't Take Them All</name></song></songs>" }
 
         it "renders array" do
-          songs.extend(representer).to_xml.must_equal_xml xml_doc
+          _(songs.extend(representer).to_xml).must_equal_xml xml_doc
         end
 
         it "renders array with decorator" do
-          decorator.new(songs).to_xml.must_equal_xml xml_doc
+          _(decorator.new(songs).to_xml).must_equal_xml xml_doc
         end
 
         it "parses array" do
@@ -499,7 +499,7 @@ class XMLCollectionTest < Minitest::Spec
 
       describe "#to_xml" do
         it "renders hash" do
-          songs.extend(representer).to_xml.must_equal_xml xml_doc
+          _(songs.extend(representer).to_xml).must_equal_xml xml_doc
         end
 
         it "respects :exclude" do
@@ -511,7 +511,7 @@ class XMLCollectionTest < Minitest::Spec
         end
 
         it "renders hash with decorator" do
-          decorator.new(songs).to_xml.must_equal_xml xml_doc
+          _(decorator.new(songs).to_xml).must_equal_xml xml_doc
         end
       end
 
@@ -546,7 +546,7 @@ class XmlHashTest < Minitest::Spec
     let(:doc) { "<open_struct><first>The Gargoyle</first><second>Bronx</second></open_struct>" }
 
     # to_xml
-    it { OpenStruct.new(songs: {"first" => "The Gargoyle", "second" => "Bronx"}).extend(representer).to_xml.must_equal_xml(doc) }
+    it { _(OpenStruct.new(songs: {"first" => "The Gargoyle", "second" => "Bronx"}).extend(representer).to_xml).must_equal_xml(doc) }
     # FIXME: this NEVER worked!
     # it { OpenStruct.new.extend(representer).from_xml(doc).songs.must_equal({"first" => "The Gargoyle", "second" => "Bronx"}) }
   end
@@ -571,12 +571,12 @@ class XmlHashTest < Minitest::Spec
 
     # to_xml
     it {
-      OpenStruct.new(
+      _(OpenStruct.new(
         songs: {
           "first"  => OpenStruct.new(title: "The Gargoyle"),
           "second" => OpenStruct.new(title: "Bronx")
         }
-      ).extend(representer).to_xml.must_equal_xml(doc)
+      ).extend(representer).to_xml).must_equal_xml(doc)
     }
     # FIXME: this NEVER worked!
     # it { OpenStruct.new.extend(representer).from_xml(doc).songs.must_equal({"first" => "The Gargoyle", "second" => "Bronx"}) }
