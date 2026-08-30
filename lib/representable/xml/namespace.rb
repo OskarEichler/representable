@@ -6,18 +6,22 @@ module Representable::XML
   # different implementation in Java which has other requirements that we couldn't fulfil.
   # Please wait for Representable 4 where we replace Nokogiri with Oga.
   module Namespace
+    XPATH_DEFAULT_PREFIX = '__representable'.freeze
+
     def self.included(includer)
       includer.extend(DSL)
     end
 
     module DSL
       def namespace(namespace)
+        heritage.record(:namespace, namespace)
         representable_attrs.options[:local_namespace] = namespace
         representable_attrs.options[:namespace_mappings] ||= {}
         representable_attrs.options[:namespace_mappings][namespace] = nil # this might get overwritten via #namespace_def later.
       end
 
       def namespace_def(mapping)
+        heritage.record(:namespace_def, mapping)
         namespace_defs.merge!(mapping.invert)
       end
 
@@ -34,6 +38,8 @@ module Representable::XML
         #   property :author, namespace: "http://ns/author" do ... end
 
         super.tap do |dfn|
+          dfn.merge!(namespace_defs: namespace_defs)
+
           if dfn.typed? # FIXME: ouch, this should be doable with property's API to hook into the creation process.
             dfn.merge!( namespace: dfn.representer_module.representable_attrs.options[:local_namespace] )
 
@@ -65,13 +71,13 @@ module Representable::XML
 
       # FIXME: this is shit, the NestedOptions is executed too late here!
       def read(node, as)
-        super(node, prefixed(self, as))
+        super(node, prefixed(self, as, XPATH_DEFAULT_PREFIX))
       end
 
       private
-      def prefixed(dfn, as)
+      def prefixed(dfn, as, default_prefix = nil)
         uri    = dfn[:namespace] # this is generic behavior and per property
-        prefix = dfn[:namespace_defs][uri]
+        prefix = dfn[:namespace_defs][uri] || (default_prefix if uri)
         as     = Namespace::Namespaced(prefix, as)
       end
     end
@@ -92,7 +98,8 @@ module Representable::XML
 
       # TODO: there should be an easier way to pass a set of options to all nested #to_node decorators.
       representable_attrs.keys.each do |property|
-        options[property.to_sym] = { show_definition: false, namespaces: options[:namespaces] }
+        nested_options = options[property.to_sym] || {}
+        options[property.to_sym] = nested_options.merge(show_definition: false, namespaces: options[:namespaces])
       end
 
       super(options).tap do |node|

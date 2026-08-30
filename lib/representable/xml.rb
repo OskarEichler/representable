@@ -22,6 +22,7 @@ module Representable
 
     module ClassMethods
       def remove_namespaces!
+        heritage.record(:remove_namespaces!)
         representable_attrs.options[:remove_namespaces] = true
       end
 

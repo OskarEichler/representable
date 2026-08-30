@@ -22,7 +22,14 @@ module Representable
       def write_scalar(value)
         return value if typed?
 
-        Psych::Nodes::Scalar.new(value.to_s)
+        value = value.to_s
+        if value.encoding == Encoding::BINARY && !value.ascii_only?
+          return Psych::Nodes::Scalar.new(
+            [value].pack('m0'), nil, 'tag:yaml.org,2002:binary', false, false, Psych::Nodes::Scalar::LITERAL
+          )
+        end
+
+        Psych::Nodes::Scalar.new(value.encode(Encoding::UTF_8))
       end
 
       def serialize_method
@@ -38,6 +45,8 @@ module Representable
         include Representable::Binding::Collection
 
         def node_for(fragments)
+          return super if fragments.nil?
+
           Psych::Nodes::Sequence.new.tap do |seq|
             seq.style = Psych::Nodes::Sequence::FLOW if self[:style] == :flow
             fragments.each { |frag| seq.children << write_scalar(frag) }
